@@ -1,0 +1,17 @@
+version: '3'
+
+networks:
+    dkreisenet: 
+      name: dkreisenet
+      driver: bridge
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx
+    ports:
+      - "443:443"
+    networks:
+      - dkreisenet
+    restart: always
