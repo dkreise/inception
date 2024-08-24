@@ -1,0 +1,26 @@
+
+
+services:
+  nginx:
+    container_name: nginx-new
+    build: ./nginx-new
+    image: nginx-new
+    ports:
+      - "8080:80"
+        #    volumes:
+      #      - wordpress_data:/var/www/html
+
+  wordpress:
+    container_name: wordpress-new
+    build: ./wordpress-new
+    image: wordpress-new
+      #    volumes:
+      #      - wordpress_data:/var/www/html
+
+        #  mariadb:
+        #    container_name: mariadb
+        #    build: ./requirements/mariadb
+        #    image: mariadb
+
+      #volumes:
+  #  wordpress_data:
