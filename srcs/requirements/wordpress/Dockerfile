@@ -1,9 +1,10 @@
-FROM debian:12.6
+FROM debian:bullseye
 
 RUN apt-get update && apt-get -y install \
 	curl \
-	php8.2-fpm \
-	php8.2-mysqli
+	php7.4-fpm \
+	php7.4-mysqli \
+	mariadb-client
 
 # Install WordPress CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
