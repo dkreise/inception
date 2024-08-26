@@ -3,7 +3,9 @@ FROM debian:bullseye
 RUN apt-get update
 RUN apt-get install -y nginx openssl
 
-EXPOSE 80
+#EXPOSE 80
+
+COPY default /etc/nginx/sites-enabled/default
 
 CMD ["nginx", "-g", "daemon off;"]
 

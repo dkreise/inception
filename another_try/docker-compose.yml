@@ -1,26 +1,44 @@
 
 
+
 services:
   nginx:
     container_name: nginx-new
     build: ./nginx-new
     image: nginx-new
+    depends_on:
+      - wordpress
+      - mariadb
     ports:
       - "8080:80"
-        #    volumes:
-      #      - wordpress_data:/var/www/html
+    volumes:
+      - ./wordpress_data:/var/www/html
+    networks:
+      another_try_inception:
 
   wordpress:
     container_name: wordpress-new
     build: ./wordpress-new
     image: wordpress-new
-      #    volumes:
-      #      - wordpress_data:/var/www/html
+    depends_on:
+      - mariadb
+    volumes:
+      - ./wordpress_data:/var/www/html
+    networks:
+      another_try_inception:
 
-        #  mariadb:
-        #    container_name: mariadb
-        #    build: ./requirements/mariadb
-        #    image: mariadb
+  mariadb:
+    container_name: mariadb-new
+    build: ./mariadb-new
+    image: mariadb-new
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      another_try_inception:
+
+networks:
+  another_try_inception:
+    driver: bridge
 
       #volumes:
   #  wordpress_data:

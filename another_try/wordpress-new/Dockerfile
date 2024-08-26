@@ -14,19 +14,22 @@ RUN apt-get update && apt-get -y install \
 # Download and install WordPress
 #RUN wp core download --allow-root
 
+# Create the /run/php directory and set appropriate permissions
+RUN mkdir -p /run/php && chown -R www-data:www-data /run/php
+
 # Set permissions for WordPress files
 
-#COPY www.conf /etc/php/8.2/fpm/pool.d/
+COPY www.conf /etc/php/7.4/fpm/pool.d/
 
-#COPY script.sh .
+COPY script.sh .
 
-#RUN chmod +x script.sh
+RUN chmod +x script.sh
 
 # Expose port 9000 for PHP-FPM
-#EXPOSE 9000
+EXPOSE 9000
 
 # Start PHP-FPM (using the correct executable)
-#CMD ["./script.sh"]
+CMD ["./script.sh"]
 
 # Alternative CMD if the above does not work:
-CMD ["php-fpm7.4", "-F"]
+#CMD ["php-fpm7.4", "-F"]
