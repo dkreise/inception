@@ -1,5 +1,9 @@
 
 
+networks:
+  dikreis:
+    name: dikreis
+    driver: bridge
 
 services:
   nginx:
@@ -10,11 +14,11 @@ services:
       - wordpress
       - mariadb
     ports:
-      - "8080:80"
+      - "443:443"
     volumes:
       - ./wordpress_data:/var/www/html
     networks:
-      another_try_inception:
+      - dikreis
 
   wordpress:
     container_name: wordpress-new
@@ -25,7 +29,7 @@ services:
     volumes:
       - ./wordpress_data:/var/www/html
     networks:
-      another_try_inception:
+      - dikreis
 
   mariadb:
     container_name: mariadb-new
@@ -34,11 +38,19 @@ services:
     volumes:
       - ./database:/var/lib/mysql
     networks:
-      another_try_inception:
+      - dikreis
 
-networks:
-  another_try_inception:
-    driver: bridge
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dkreise/data/wordpress
+      o: bind
 
-      #volumes:
-  #  wordpress_data:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dkreise/data/mysql
+      o: bind
