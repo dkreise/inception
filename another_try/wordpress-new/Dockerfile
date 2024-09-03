@@ -1,4 +1,4 @@
-FROM debian:11.7
+FROM debian:bullseye
 
 RUN apt-get update && apt-get -y install \
 	curl \

@@ -30,6 +30,8 @@ services:
       - ./wordpress_data:/var/www/html
     networks:
       - dikreis
+    env_file:
+      - .env
 
   mariadb:
     container_name: mariadb-new
@@ -39,6 +41,8 @@ services:
       - ./database:/var/lib/mysql
     networks:
       - dikreis
+    env_file:
+      - .env
 
 volumes:
   wordpress_data:

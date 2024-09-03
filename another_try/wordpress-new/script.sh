@@ -4,10 +4,9 @@ if [ -f ./wp-config.php ]
 then
 	echo "Wordpress aalready exists"
 else
-	echo "helloooooooo"
 	wp core download --allow-root
-	wp config create --dbname=wordpress --dbuser=wpuser --dbpass=password --dbhost=mariadb --allow-root
-	wp core install --url=localhost --title=inception --admin_user=admin --admin_password=admin --admin_email=admin@admin.com --skip-email --allow-root
+	wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOSTNAME --allow-root
+	wp core install --url=$DOMAIN_NAME --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_ADMIN --admin_password=$WORDPRESS_ADMIN_PASS --admin_email=$WORDPRESS_ADMIN_EMAIL --skip-email --allow-root
 fi
 
 /usr/sbin/php-fpm7.4 -F;
