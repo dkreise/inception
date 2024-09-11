@@ -3,8 +3,13 @@ FROM debian:bullseye
 RUN apt-get update
 RUN apt-get install -y nginx openssl
 
-COPY default /etc/nginx/sites-enabled/default
+EXPOSE 443
 
-EXPOSE 80
+COPY conf/default /etc/nginx/sites-enabled/default
+COPY tools/nginx_www.sh /var/www
+
+RUN chmod +x /var/www/nginx_www.sh
+
+ENTRYPOINT [ "var/www/nginx_www.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]

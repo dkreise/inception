@@ -18,7 +18,7 @@ RUN mkdir -p /var/run/mysqld \
 COPY script.sh /usr/local/bin/script.sh
 RUN chmod 755 /usr/local/bin/script.sh
 
-RUN mysql_install_db
+#RUN mysql_install_db
 
 #CMD ["./script.sh"]
 ENTRYPOINT [ "/usr/local/bin/script.sh" ]

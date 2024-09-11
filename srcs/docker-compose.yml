@@ -1,26 +1,62 @@
-
+networks:
+  dikreis:
+    name: dikreis
+    driver: bridge
 
 services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
     image: nginx
+    depends_on:
+      - wordpress
+      - mariadb
     ports:
-      - "8080:80"
+      - "443:443"
     volumes:
-      - wordpress_data:/var/www/html
+      - ./wordpress_data:/var/www/html
+    networks:
+      - dikreis
+    restart: always
 
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
     image: wordpress
+    depends_on:
+      - mariadb
     volumes:
-      - wordpress_data:/var/www/html
+      - ./wordpress_data:/var/www/html
+    networks:
+      - dikreis
+    env_file:
+      - .env
+    restart: always
 
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
     image: mariadb
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      - dikreis
+    env_file:
+      - .env
+    restart: always
 
 volumes:
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dkreise/data/wordpress
+      o: bind
+
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dkreise/data/mysql
+      o: bind
+
