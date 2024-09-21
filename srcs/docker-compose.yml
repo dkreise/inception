@@ -19,6 +19,18 @@ services:
       - dikreis
     restart: always
 
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - dikreis
+    env_file:
+      - .env
+    restart: always
+
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
@@ -33,26 +45,7 @@ services:
       - .env
     restart: always
 
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb
-    image: mariadb
-    volumes:
-      - database:/var/lib/mysql
-    networks:
-      - dikreis
-    env_file:
-      - .env
-    restart: always
-
 volumes:
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/dkreise/data/wordpress
-      o: bind
-
   database:
     driver: local
     driver_opts:
@@ -60,3 +53,9 @@ volumes:
       device: /home/dkreise/data/mysql
       o: bind
 
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dkreise/data/wordpress
+      o: bind

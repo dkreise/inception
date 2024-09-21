@@ -5,10 +5,18 @@ then
 	echo "Wordpress already exists"
 else
 	wp core download --allow-root
+	echo "downloaded"
+
+	sleep 10 
+
 	wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOSTNAME --allow-root
+	echo "created"
 	wp core install --url=$DOMAIN_NAME --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_ADMIN --admin_password=$WORDPRESS_ADMIN_PASS --admin_email=$WORDPRESS_ADMIN_EMAIL --skip-email --allow-root
+	echo "installed"
 	wp user create $WORDPRESS_USER $WORDPRESS_EMAIL --role=author --user_pass=$WORDPRESS_USER_PASS --allow-root
+	echo "user done"
 	wp theme install astra --activate --allow-root
+	echo "downloaded"
 fi
 
 /usr/sbin/php-fpm7.4 -F;

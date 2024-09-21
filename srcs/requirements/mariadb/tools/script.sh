@@ -1,5 +1,4 @@
 #!/bin/bash
-#service mysql start
 
 mkdir -p /run/mysqld
 chown mysql:mysql /run/mysqld
@@ -18,7 +17,7 @@ if [ ! -d /var/lib/mysql/${MYSQL_DATABASE} ];
 then
 	mysql -u ${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE $MYSQL_DATABASE;"
 	mysql -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD'"
-	mysql -e "GRANT ALL ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION;"
+	mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION;"
 	mysql -e "FLUSH PRIVILEGES;"
 fi
 
